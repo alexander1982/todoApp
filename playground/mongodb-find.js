@@ -32,11 +32,11 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
 	//},(err) => {
 	//	console.log(err);
 	//});
-	db.collection('Todos').find({name: argv.name}).toArray().then((docs) => {
-		console.log(JSON.stringify(docs, undefined, 1));
-	}, (err) => {
-		console.log(err);
-	});
+	//db.collection('Todos').find({name: argv.name}).toArray().then((docs) => {
+	//	console.log(JSON.stringify(docs, undefined, 1));
+	//}, (err) => {
+	//	console.log(err);
+	//});
 
-	db.close();
+	//db.close();
 });

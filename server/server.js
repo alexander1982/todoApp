@@ -1,3 +1,5 @@
+require('./config/config.js');
+
 var mongoose = require('./db/mongoose.js').mongoose;
 var Todo = require('./models/todo.js').Todo;
 var User = require('./models/user.js').User;

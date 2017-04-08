@@ -7,7 +7,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
 	}
 	console.log('Connected to mongo server');
 	
-	db.collection('Todos').insertOne({
+	db.collection('todos').insertOne({
 		                                 text     : 'leep',
 		                                 completed: false
 	                                 }, (err, result) => {
@@ -18,7 +18,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
 		console.log(JSON.stringify(result.ops, undefined, 2));
 	});
 	
-	//db.collection('Todos').insertOne({
+	//db.collection('todos').insertOne({
 	//	                                 name    : 'Zalex',
 	//	                                 age     : 32,
 	//	                                 location: 'Nowhere'
@@ -29,7 +29,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
 	//	console.log(JSON.stringify(result.ops[0]._id.getTimestamp(), undefined, 2));
 	//});
 	
-	//db.collection('Todos').insertOne({
+	//db.collection('todos').insertOne({
 	//	                                 name    : 'Zalex',
 	//	                                 age     : 32,
 	//	                                 location: 'Nowhere'

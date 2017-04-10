@@ -3,6 +3,7 @@ require('./config/config.js');
 var mongoose = require('./db/mongoose.js').mongoose;
 var Todo = require('./models/todo.js').Todo;
 var User = require('./models/user.js').User;
+var authenticate = require('./middlewear/authenticate.js').authenticate;
 
 const ObjectId = require('mongodb').ObjectID;
 const _ = require('lodash');
@@ -100,6 +101,12 @@ app.patch('/todos/:id', (req, res) => {
 	}).catch((err) => {
 		res.status(400).send(err);
 	});
+});
+
+
+
+app.get('/users/me', authenticate, (req, res) => {
+	res.send(req.user);
 });
 
 app.listen(port, () => {

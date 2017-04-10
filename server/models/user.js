@@ -5,59 +5,77 @@ const _ = require('lodash');
 
 var UserSchema = new mongoose.Schema({
 	username: {
-		type: String,
-		required: true,
-		trim: true,
+		type     : String,
+		required : true,
+		trim     : true,
 		minlength: 2
 	},
-	email: {
-		type: String,
-		required: true,
-		trim: true,
+	email   : {
+		type     : String,
+		required : true,
+		trim     : true,
 		minlength: 10,
-		unique: true,
-		validate: {
+		unique   : true,
+		validate : {
 			validator: validator.isEmail,
-			message: '{VALUE} is not valid'
+			message  : '{VALUE} is not valid'
 		}
 	},
 	password: {
-		type: String,
-		required: true,
-		trim: true,
+		type     : String,
+		required : true,
+		trim     : true,
 		minlength: 8
 	},
-	tokens: [{
-		access: {
-			type: String,
-			required: true
-		},
-		token: {
-			type: String,
-			required: true
+	tokens  : [
+		{
+			access: {
+				type    : String,
+				required: true
+			},
+			token : {
+				type    : String,
+				required: true
+			}
 		}
-	}]
+	]
 });
 
 UserSchema.methods.toJSON = function() {
 	var user = this;
 	var userObject = user.toObject();
-	
+
 	return _.pick(userObject, ['_id', 'email']);
 };
 
 UserSchema.methods.generateAuthToken = function() {
 	var user = this;
 	var access = 'auth';
-	var token = jwt.sign({_id: user._id.toHexString(), access}, 'abc123').toString();
-	
-	user.tokens.push({access, token});
-	
+	var token = jwt.sign({ _id: user._id.toHexString(), access }, 'abc123').toString();
+
+	user.tokens.push({ access, token });
+
 	return user.save().then(() => {
 		return token;
 	});
 };
 
+UserSchema.statics.findByToken = function(token) {
+	var User = this;
+	var decoded;
+
+	try {
+		decoded = jwt.verify(token, 'abc123');
+	} catch(e) {
+		return Promise.reject();
+	}
+	return User.findOne({
+		                    '_id'          : decoded._id,
+		                    'tokens.token' : token,
+		                    'tokens.access': 'auth'
+	                    });
+};
+
 var User = mongoose.model('User', UserSchema);
 
-module.exports = {User};
+module.exports = { User };

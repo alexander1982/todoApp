@@ -1,9 +1,9 @@
 const expect = require('expect');
 const request = require('supertest');
 const todos = require('./seed/seed.js').todos;
+const users = require('./seed/seed.js').users;
 const populateTodos = require('./seed/seed.js').populateTodos;
 const populateUsers = require('./seed/seed.js').populateUsers;
-const users = require('./seed/seed.js').users;
 
 const ObjectId = require('mongodb').ObjectID;
 const app = require('./../server.js').app;

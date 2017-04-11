@@ -4,6 +4,7 @@ const ObjectId = require('mongodb').ObjectID;
 const userOneId = new ObjectId();
 const userTwoId = new ObjectId();
 const jwt = require('jsonwebtoken');
+require('../../config/config.js');
 
 const users = [{
 	_id: userOneId,
@@ -12,7 +13,7 @@ const users = [{
 	password: 'userOnePass',
 	tokens: [{
 		access: 'auth',
-		token: jwt.sign({_id: userOneId, access: 'auth'}, 'abc123').toString()
+		token: jwt.sign({_id: userOneId, access: 'auth'}, process.env.JWT_SECRET).toString()
 	}]
 },
 	{
@@ -22,7 +23,7 @@ const users = [{
 		password: 'userTwoPass',
 		tokens: [{
 			access: 'auth',
-			token: jwt.sign({_id: userTwoId, access: 'auth'}, 'abc123').toString()
+			token: jwt.sign({_id: userTwoId, access: 'auth'}, process.env.JWT_SECRET).toString()
 		}]
 	}
 ];
